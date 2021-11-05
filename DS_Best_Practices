@@ -1,0 +1,39 @@
+The following are the points for DataStage best practices:
+
+Select suitable configurations file (nodes depending on data volume)
+Select buffer memory correctly and select proper partition
+Turn off Run time Column propagation wherever it’s not required
+Taking care about sorting of the data.
+Handling null values (use modify instead of transformer)
+Try to decrease the use of transformer. (Use copy, filter, modify)
+Use data-set instead of sequential file in the middle of the vast jobs
+Take maximum 20 stages for a job for best performance.
+Select Join or Lookup or Merge (depending on data volume)
+Stop propagation of unnecessary metadata between the stages.
+Points we need to consider:
+
+Staged the data coming from ODBC/OCI/DB2UDB stages or any database on the server using Hash/Sequential files for optimum performance
+Tuned the OCI stage for ‘Array Size’ and ‘Rows per Transaction’ numerical values for faster inserts, updates and selects.
+Tuned the ‘Project Tunable’ in Administrator for better performance
+Use sorted data for Aggregator.
+Sorted the data as much as possible in DB and reduced the use of DS-Sort for better performance of jobs.
+Removed the data and columns not used from the source as early as possible in the job.
+Worked with DB-admin to create appropriate Indexes on tables for better performance of DS queries.
+Converted some of the complex joins/business in DS to Stored Procedures on DS for faster execution of the jobs.
+If an input file has an excessive number of rows and can be split-up then use standard logic to run jobs in parallel.
+Before writing a routine or a transform, make sure that there is not the functionality required in one of the standard routines supplied in the sdk or ds utilities categories. Constraints are generally CPU intensive and take a significant amount of time to process. This may be the case if the constraint calls routines or external macros but if it is inline code then the overhead will be minimal.
+Try to have the constraints in the ‘Selection’ criteria of the jobs itself. This will eliminate the unnecessary records even getting in before joins are made.
+Tuning should occur on a job-by-job basis.
+Use the power of DBMS.
+Try not to use a sort stage when you can use an ORDER BY clause in the database.
+Using a constraint to filter a record set is much slower than performing a SELECT … WHERE….
+Make every attempt to use the bulk loader for your particular database. Bulk loaders are generally faster than using ODBC or OLE.
+Minimize the usage of Transformer (Instead of this use Copy modify Filter Row Generator
+Use SQL Code while extracting the data
+Handle the nulls using modify stage.
+Minimize the warnings
+Reduce the number of lookup in a job design.
+Try not to use more than 20 stages in a job if expected data volume is too high.
+Use IPC stage between two passive stages Reduces processing time
+Drop indexes before data loading and recreate after loading data into tables
+Check the write cache of Hash file. If the same hash file is used for Look up and as well as target disable this Option.
